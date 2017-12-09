@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   before_save { self.email = email.downcase if email.present? }
   before_save { self.role ||= :member }
@@ -20,7 +21,7 @@ class User < ApplicationRecord
 
    has_secure_password
 
-   enum role: [:member, :admin]
+   enum role: [:member, :admin, :moderator]
 
    def format_name
      if name
